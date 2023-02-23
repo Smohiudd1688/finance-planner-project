@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import { UserContext } from '../components/UserContext';
+import { useHistory } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -17,8 +17,8 @@ function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="/signup">
+        Finance Your Future
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -32,24 +32,52 @@ const darkTheme = createTheme({
     },
 });
 
-function SignUp() {
+function SignUp({setIsLogged}) {
+    const {setUser} = useContext(UserContext);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [income, setIncome] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState([]);
+
+    const history = useHistory();
 
     const handleSubmit = (event) => {
         event.preventDefault();
  
-        console.log({
-            firstName: firstName,
-            lastName: lastName,
-            income: income,
+        const user = {
+            first_name: firstName,
+            last_name: lastName,
+            monthly_income: income,
             email: email,
             password: password
+        };
+
+        fetch('/users', {
+            method: "POST",
+            headers: {"Content-Type" : "application/json"},
+            body: JSON.stringify(user)
+        })
+        .then(res => {
+            if (res.ok) {
+                res.json().then(user => {
+                    setIsLogged(true);
+                    setUser(user);
+                    history.push('/');
+                })
+            } else {
+                res.json().then(e => setErrors(e.errors))
+            }
         });
+
     };
+
+    const renderErrors = errors.map((error, index) => {
+        return (
+            <p className="errors" key={index}>* {error}</p>
+        );
+    });
 
     return (
         <ThemeProvider theme={darkTheme}>
@@ -69,6 +97,7 @@ function SignUp() {
             <Typography component="h1" variant="h5">
                 Sign up
             </Typography>
+            {errors.length !== 0 ? renderErrors : null}
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
