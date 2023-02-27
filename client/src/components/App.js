@@ -9,6 +9,7 @@ import NavBar from './NavBar';
 import Home from '../pages/Home';
 import Account from '../pages/Account';
 import Loading from '../pages/Loading';
+import AddBudgetCategory from '../pages/AddBudgetCategory';
 import '../App.css';
 
 function App() {
@@ -64,6 +65,9 @@ function App() {
           </Route>
           <Route path="/account">
             <Account setIsLogged={setIsLogged} />
+          </Route>
+          <Route path="/add_category">
+            <AddBudgetCategory />
           </Route>
           <Route path="/">
             <Home />
