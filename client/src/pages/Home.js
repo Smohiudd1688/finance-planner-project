@@ -18,11 +18,19 @@ function Home() {
         .then(data => setCategories(data));
     }, []);
 
-    console.log(categories)
-
     function handleAddCatButton() {
         history.push('/add_category');
     }
+
+    const renderCategories = categories.map(category => {
+        return (<CategoryItem 
+            key={category.id}
+            id={category.id}
+            title={category.title}
+            budget={category.budget}
+            current={category.current_spent}
+        />)
+    });
 
     return (
        <Box sx={{ flexGrow: 1 }}>
@@ -35,10 +43,7 @@ function Home() {
                         Add a Category to Track
                     </Button>
                 </Grid>
-                <CategoryItem />
-                <CategoryItem />
-                <CategoryItem />
-                <CategoryItem />
+                {renderCategories}
             </Grid>
         </Box>
     );

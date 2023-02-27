@@ -14,7 +14,7 @@ class BudgetCategoriesController < ApplicationController
         end
     
         def update
-            budgetCategory = budgetCategory.find_by(id: params[:id])
+            budgetCategory = BudgetCategory.find_by(id: params[:id])
             budgetCategory.update!(budgetCategory_params)
             render json: budgetCategory, status: :ok
         end

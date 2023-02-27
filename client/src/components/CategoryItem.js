@@ -9,8 +9,9 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Popover from '@mui/material/Popover';
 import UpdateCategory from "../UpdateCategory";
 
-function CategoryItem() {
+function CategoryItem({id, title, budget, current, onUpdateCategory}) {
     const [anchorEl, setAnchorEl] = useState(null);
+    const [error, setError] = useState("");
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -21,15 +22,28 @@ function CategoryItem() {
     };
 
     const open = Boolean(anchorEl);
-    const id = open ? 'simple-popover' : undefined;
+    const check = open ? 'simple-popover' : undefined;
 
-    function handleAddMoney() {
+    function handleAddMoney(newCurrent) {
         setAnchorEl(null);
-    }
 
-    const title = "Entertainment"
-    const budget = 2000;
-    const current = 500;
+        fetch(`/budget_categories/${id}`, {
+            method: "PATCH",
+            headers: {"Content-Type" : "application/json"},
+            body: JSON.stringify({
+                current_spent: current + newCurrent
+            })
+        })
+        .then(res => {
+            if (res.ok) {
+                res.json().then(data => {
+                    onUpdateCategory(data);
+                })
+            } else {
+                res.json().then(e => setError(e.errors))
+            }
+        });
+    }
 
     const card = (
         <React.Fragment>
@@ -48,7 +62,7 @@ function CategoryItem() {
           <CardActions>
             <Button onClick={handleClick} color="error" size="small">Add Money</Button>
             <Popover
-                id={id}
+                id={check}
                 open={open}
                 anchorEl={anchorEl}
                 onClose={handleClose}
