@@ -3,5 +3,5 @@ class BudgetCategory < ApplicationRecord
 
     validates :title, :budget, :current_spent, presence: true
     validates :budget, numericality: { greater_than: 0 }
-    validates :current_spent, numericality: { greater_than: 0 }
+    validates :current_spent, numericality: { greater_than_or_equal_to: 0 }
 end

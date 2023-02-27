@@ -3,7 +3,8 @@ class BudgetCategoriesController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
     
         def create
-            budgetCategory = BudgetCategory.create!(budgetCategory_params)
+            user = User.find(session[:user_id])
+            budgetCategory = user.budget_categories.create!(budgetCategory_params)
             render json: budgetCategory, status: :created
         end
     
@@ -21,7 +22,7 @@ class BudgetCategoriesController < ApplicationController
         private
     
         def budgetCategory_params
-            params.permit(:first_name, :budget, :current_spent)
+            params.permit(:title, :budget, :current_spent)
         end
     
         def render_unprocessable_entity_response(invalid)

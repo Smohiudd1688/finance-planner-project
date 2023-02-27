@@ -1,19 +1,49 @@
 import React, {useState, useContext, useEffect} from "react";
 import { UserContext } from "../components/UserContext";
+import { useHistory } from "react-router-dom";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 
 function AddBudgetCategory () {
-    const {user, setUser} = useContext(UserContext);
-    const [errors, setErrors] = useState(false);
+    const [errors, setErrors] = useState([]);
     const [title, setTitle] = useState("");
     const [budget, setBudget] = useState("");
 
+    const history = useHistory();
+
     function handleAddCategory(event) {
         event.preventDefault();
+
+        const budgetCategory = {
+            title: title,
+            budget: budget,
+            current_spent: 0
+        }
+
+        console.log(budgetCategory)
+
+        fetch('/budget_categories', {
+            method: "POST",
+            headers: {"Content-Type" : "application/json"},
+            body: JSON.stringify(budgetCategory)
+        })
+        .then(res => {
+            if (res.ok) {
+                res.json().then(data => {
+                    history.push('/');
+                })
+            } else {
+                res.json().then(e => setErrors(e.errors))
+            }
+        });
     }
+
+    const renderErrors = errors.map((error, index) => {
+        return (
+            <p className="errors" key={index}>* {error}</p>
+        );
+    });
 
     return (
         <Box
@@ -26,6 +56,7 @@ function AddBudgetCategory () {
             autoComplete="off"
         >
             <h2>Add a Category</h2>
+            {errors.length !== 0 ? renderErrors : null}
             <TextField
                 required
                 id="title"

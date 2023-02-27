@@ -52,19 +52,19 @@ function SignIn({setIsLogged, onSignIn}) {
     fetch('/login', {
       method: "POST",
       headers: {"Content-Type" : "application/json"},
-            body: JSON.stringify(user)
+      body: JSON.stringify(user)
+    })
+    .then(res => {
+      if (res.ok) {
+        res.json().then(user => {
+          setIsLogged(true);
+          setUser(user);
+          history.push('/');
         })
-        .then(res => {
-            if (res.ok) {
-                res.json().then(user => {
-                  setIsLogged(true);
-                  setUser(user);
-                  history.push('/');
-                })
-            } else {
-                res.json().then(e => setErrors([e.errors]));
-            }
-        })
+      } else {
+        res.json().then(e => setErrors([e.errors]));
+      }
+    })
   };
 
   const renderErrors = errors.map((error, index) => {

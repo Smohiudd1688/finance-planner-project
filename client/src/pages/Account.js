@@ -54,7 +54,7 @@ function Account ({setIsLogged}) {
             sx={{
                 '& .MuiTextField-root': { m: 1, width: '35%' },
             }}
-            id="account"
+            className="form"
             noValidate
             autoComplete="off"
         >
