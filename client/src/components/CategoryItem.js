@@ -27,27 +27,36 @@ function CategoryItem({id, title, budget, current, onUpdateCategory}) {
     function handleAddMoney(newCurrent) {
         setAnchorEl(null);
 
-        fetch(`/budget_categories/${id}`, {
-            method: "PATCH",
-            headers: {"Content-Type" : "application/json"},
-            body: JSON.stringify({
-                current_spent: current + newCurrent
-            })
-        })
-        .then(res => {
-            if (res.ok) {
-                res.json().then(data => {
-                    onUpdateCategory(data);
+        if (parseInt(newCurrent) === NaN || parseInt(newCurrent).toString().length !== newCurrent.length || parseInt(newCurrent) <= 0) {
+            setError("Please enter a valid number greater than zero.") 
+        } else {
+            const updatedCurrent = parseFloat(current) + parseFloat(newCurrent);
+
+            fetch(`/budget_categories/${id}`, {
+                method: "PATCH",
+                headers: {"Content-Type" : "application/json"},
+                body: JSON.stringify({
+                    current_spent: updatedCurrent
                 })
-            } else {
-                res.json().then(e => setError(e.errors))
-            }
-        });
+            })
+            .then(res => {
+                if (res.ok) {
+                    res.json().then(data => {
+                        onUpdateCategory(data);
+                        setError("");
+                    })
+                } else {
+                    res.json().then(e => setError(e.errors))
+                }
+            });
+        }
+
     }
 
     const card = (
         <React.Fragment>
           <CardContent>
+            {error !== "" ? <p className="errors" >* {error}</p> : null}
             <Typography sx={{ fontSize: 24 }} color="text.secondary" gutterBottom>
               {title}
             </Typography>

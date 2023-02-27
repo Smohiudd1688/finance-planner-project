@@ -57,6 +57,7 @@ function NavBar() {
             noWrap
             component="a"
             href="/"
+            onClick={() => handleNavigate('Home')}
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -112,6 +113,7 @@ function NavBar() {
             noWrap
             component="a"
             href=""
+            onClick={() => handleNavigate('Home')}
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },

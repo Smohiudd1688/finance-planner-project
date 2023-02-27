@@ -22,6 +22,15 @@ function Home() {
         history.push('/add_category');
     }
 
+    function handleUpdateCategory(updatedCategory) {
+        const updatedCategories = categories.map((category) => {
+            if (updatedCategory.id === category.id) return updatedCategory;
+            return category;
+        });
+
+        setCategories(updatedCategories);
+    }
+
     const renderCategories = categories.map(category => {
         return (<CategoryItem 
             key={category.id}
@@ -29,6 +38,7 @@ function Home() {
             title={category.title}
             budget={category.budget}
             current={category.current_spent}
+            onUpdateCategory={handleUpdateCategory}
         />)
     });
 
