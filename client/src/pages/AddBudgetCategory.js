@@ -1,5 +1,4 @@
-import React, {useState, useContext, useEffect} from "react";
-import { UserContext } from "../components/UserContext";
+import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -55,7 +54,7 @@ function AddBudgetCategory () {
             noValidate
             autoComplete="off"
         >
-            <h2>Add a Category</h2>
+            <h2 className="header">Add a Category</h2>
             {errors.length !== 0 ? renderErrors : null}
             <TextField
                 required
