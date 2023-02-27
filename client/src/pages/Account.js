@@ -1,5 +1,6 @@
 import React, {useState, useContext, useEffect} from "react";
 import { UserContext } from "../components/UserContext";
+import { useHistory } from "react-router-dom";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,6 +10,8 @@ function Account ({setIsLogged}) {
     const {user, setUser} = useContext(UserContext);
     const [error, setError] = useState(false);
     const [monthlyIncome, setMonthlyIncome] = useState("");
+
+    const history = useHistory();
 
     useEffect(() => {
         if (user.monthly_income !== undefined && monthlyIncome === "") {
@@ -43,6 +46,7 @@ function Account ({setIsLogged}) {
             if (r.ok) {
               setUser(null);
               setIsLogged(false);
+              history.push("/signin")
             }
         })
     }

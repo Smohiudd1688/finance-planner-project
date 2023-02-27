@@ -3,8 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { UserContext } from './UserContext';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import SignIn from '../pages/SignIn';
-import SignUp from '../pages/SignUp';
+import Login from '../pages/Login';
 import NavBar from './NavBar';
 import Home from '../pages/Home';
 import Account from '../pages/Account';
@@ -35,7 +34,7 @@ function App() {
   } else if ((!user || user.email === undefined) && !isLogged) {
     return (
       <UserContext.Provider value={{user, setUser}}>
-        <SignIn onSignIn={handleSignIn} setIsLogged={setIsLogged} />
+        <Login setIsLogged={setIsLogged} />
       </UserContext.Provider>
     )
   }
@@ -46,10 +45,6 @@ function App() {
     },
   });
 
-  function handleSignIn(newUser) {
-    setUser(newUser);
-  }
-
   return (
     <div className="App">
       <ThemeProvider theme={darkTheme}>
@@ -57,12 +52,6 @@ function App() {
       <UserContext.Provider value={{user: user, setUser: setUser}}>
         <NavBar />
         <Switch>
-          <Route path="/signin" >
-            <SignIn onSignIn={handleSignIn} setIsLogged={setIsLogged} />
-          </Route>
-          <Route path="/signup">
-            <SignUp onSignIn={handleSignIn} setIsLogged={setIsLogged} />
-          </Route>
           <Route path="/account">
             <Account setIsLogged={setIsLogged} />
           </Route>

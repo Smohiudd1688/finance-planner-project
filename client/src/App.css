@@ -80,3 +80,7 @@ h1 {
 #addMoney {
   margin-left: 35%;
 }
+
+.signLink {
+  cursor: pointer;
+}

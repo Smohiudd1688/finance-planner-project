@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { red } from '@mui/material/colors';
 
 function Copyright(props) {
   return (
@@ -32,7 +33,8 @@ const darkTheme = createTheme({
     },
 });
 
-function SignUp({onSignIn, setIsLogged}) {
+function SignUp({setIsLogged, setOn}) {
+    const {setUser} = useContext(UserContext);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [income, setIncome] = useState("");
@@ -62,7 +64,7 @@ function SignUp({onSignIn, setIsLogged}) {
             if (res.ok) {
                 res.json().then(user => {
                     setIsLogged(true);
-                    onSignIn(user);
+                    setUser(user);
                     history.push('/');
                 })
             } else {
@@ -90,7 +92,7 @@ function SignUp({onSignIn, setIsLogged}) {
                 alignItems: 'center',
             }}
             >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 1, bgcolor: red[900] }}>
                 <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -162,8 +164,8 @@ function SignUp({onSignIn, setIsLogged}) {
                 </Button>
                 <Grid container>
                 <Grid item>
-                    <Link href="/signin" variant="body2">
-                    Already have an account? Sign in
+                    <Link className='signLink' onClick={() => setOn(false)} variant="body2">
+                        Already have an account? Sign in
                     </Link>
                 </Grid>
                 </Grid>
