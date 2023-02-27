@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import CategoryItem from "../components/CategoryItem";
 
 function Home() {
     const {user} = useContext(UserContext);
@@ -27,13 +28,17 @@ function Home() {
        <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
                 <Grid item xs={6}>
-                    <h1 className="header">Summary of Your Month in Money</h1>
+                    <h1 className="header">SUMMARY OF YOUR MONTH IN MONEY</h1>
                 </Grid> 
                 <Grid item xs={6}>
                     <Button onClick={handleAddCatButton} id="addButton" variant="contained" color="error">
                         Add a Category to Track
                     </Button>
                 </Grid>
+                <CategoryItem />
+                <CategoryItem />
+                <CategoryItem />
+                <CategoryItem />
             </Grid>
         </Box>
     );

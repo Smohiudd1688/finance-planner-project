@@ -59,7 +59,7 @@ function AddBudgetCategory () {
             <TextField
                 required
                 id="title"
-                label="Category for the Budget (e.g. Entertainment)"
+                label="Category to track (e.g. Entertainment)"
                 variant="standard"
                 onChange={event => setTitle(event.target.value)}
             /><br></br><br></br>

@@ -58,10 +58,21 @@
 }
 
 h1 {
+  margin-left: 11%;
   margin-top: 4%;
 }
 
 #addButton {
   margin-top: 6%;
-  margin-left: 30%;
+  margin-left: 43%;
+}
+
+.cat {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+#progress {
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
