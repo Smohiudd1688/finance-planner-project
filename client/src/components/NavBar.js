@@ -1,5 +1,6 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import { UserContext } from './UserContext';
+import { useHistory } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,16 +13,22 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import SvgIcon from '@mui/material/SvgIcon';
-import { red } from '@mui/material/colors';
+import { red, grey } from '@mui/material/colors';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = ['Home', 'Wanted Items Tracker', 'Charts'];
 
 function NavBar() {
   const {user} = useContext(UserContext);
+  const [initial, setInitial] = useState("");
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+
+  const history = useHistory();
+
+  useEffect(() => {
+    if(user.first_name !== undefined && initial === ""){
+      setInitial(user.first_name[0]);
+    }
+  }, [user]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -31,8 +38,18 @@ function NavBar() {
     setAnchorElNav(null);
   };
 
+  function handleOpenAccountPage() {
+    history.push('/account')
+  }
+
+  function handleNavigate(page) {
+    if (page === 'Home') {
+      history.push('/');
+    }
+  }
+
   return (
-    <AppBar position="static">
+    <AppBar sx={{ bgcolor: grey[600] }} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -50,7 +67,7 @@ function NavBar() {
               textDecoration: 'none',
             }}
           >
-            <img sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} className='logo' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZrnlQmSbgl4R5e25kQg5LdU0Uvb81MfukfjjkHaBZcni2UlpDe_adwqapb-zD87tgKnM&usqp=CAU" />
+            <img className='logo' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZrnlQmSbgl4R5e25kQg5LdU0Uvb81MfukfjjkHaBZcni2UlpDe_adwqapb-zD87tgKnM&usqp=CAU" />
             FINANCE YOUR FUTURE
           </Typography>
 
@@ -85,14 +102,11 @@ function NavBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                  <Typography onClick={() => handleNavigate(page)} textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <SvgIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
-            <path d="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZrnlQmSbgl4R5e25kQg5LdU0Uvb81MfukfjjkHaBZcni2UlpDe_adwqapb-zD87tgKnM&usqp=CAU" />
-          </SvgIcon>
           <Typography
             variant="h5"
             noWrap
@@ -109,13 +123,14 @@ function NavBar() {
               textDecoration: 'none',
             }}
           >
+            <img className='logo' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZrnlQmSbgl4R5e25kQg5LdU0Uvb81MfukfjjkHaBZcni2UlpDe_adwqapb-zD87tgKnM&usqp=CAU" />
             FINANCE YOUR FUTURE
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleNavigate(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
@@ -124,30 +139,11 @@ function NavBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton sx={{ p: 0 }}>
-                <Avatar sx={{ bgcolor: red[700] }}>{user.first_name[0]}</Avatar>
+            <Tooltip title="Open account information">
+              <IconButton onClick={handleOpenAccountPage} sx={{ p: 0 }}>
+                <Avatar sx={{ bgcolor: red[900] }}>{initial}</Avatar>
               </IconButton>
             </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
         </Toolbar>
       </Container>

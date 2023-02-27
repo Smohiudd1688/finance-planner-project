@@ -32,7 +32,7 @@ const darkTheme = createTheme({
   },
 });
 
-function SignIn({setIsLogged}) {
+function SignIn({setIsLogged, onSignIn}) {
   const {setUser} = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

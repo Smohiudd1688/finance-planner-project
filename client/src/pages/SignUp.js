@@ -32,8 +32,7 @@ const darkTheme = createTheme({
     },
 });
 
-function SignUp({setIsLogged}) {
-    const {setUser} = useContext(UserContext);
+function SignUp({onSignIn, setIsLogged}) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [income, setIncome] = useState("");
@@ -63,7 +62,7 @@ function SignUp({setIsLogged}) {
             if (res.ok) {
                 res.json().then(user => {
                     setIsLogged(true);
-                    setUser(user);
+                    onSignIn(user);
                     history.push('/');
                 })
             } else {

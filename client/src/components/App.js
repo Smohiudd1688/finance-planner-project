@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { UserContext } from './UserContext';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import NavBar from './NavBar';
 import Home from '../pages/Home';
+import Account from '../pages/Account';
 import Loading from '../pages/Loading';
 import '../App.css';
 
@@ -26,22 +29,41 @@ function App() {
 
   }, []);
 
-  if (!user && isLogged) {
+  if ((!user || user.email === undefined) && isLogged) {
     return <Loading />
-  } else if (!user && !isLogged) {
-    return <SignIn setIsLogged={setIsLogged} />
+  } else if ((!user || user.email === undefined) && !isLogged) {
+    return (
+      <UserContext.Provider value={{user, setUser}}>
+        <SignIn onSignIn={handleSignIn} setIsLogged={setIsLogged} />
+      </UserContext.Provider>
+    )
+  }
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
+
+  function handleSignIn(newUser) {
+    setUser(newUser);
   }
 
   return (
     <div className="App">
-      <UserContext.Provider value={{user, setUser}}>
+      <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      <UserContext.Provider value={{user: user, setUser: setUser}}>
         <NavBar />
         <Switch>
           <Route path="/signin" >
-            <SignIn setIsLogged={setIsLogged} />
+            <SignIn onSignIn={handleSignIn} setIsLogged={setIsLogged} />
           </Route>
           <Route path="/signup">
-            <SignUp setIsLogged={setIsLogged} />
+            <SignUp onSignIn={handleSignIn} setIsLogged={setIsLogged} />
+          </Route>
+          <Route path="/account">
+            <Account setIsLogged={setIsLogged} />
           </Route>
           <Route path="/">
             <Home />
@@ -51,6 +73,7 @@ function App() {
           </Route>
         </Switch>
       </UserContext.Provider>
+      </ThemeProvider>
     </div>
   );
   
