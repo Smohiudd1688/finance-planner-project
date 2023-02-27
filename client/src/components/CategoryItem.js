@@ -6,8 +6,27 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import LinearProgress from '@mui/material/LinearProgress';
+import Popover from '@mui/material/Popover';
+import UpdateCategory from "../UpdateCategory";
 
 function CategoryItem() {
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
+    function handleAddMoney() {
+        setAnchorEl(null);
+    }
+
     const title = "Entertainment"
     const budget = 2000;
     const current = 500;
@@ -27,7 +46,19 @@ function CategoryItem() {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button color="error" size="small">Add Money</Button>
+            <Button onClick={handleClick} color="error" size="small">Add Money</Button>
+            <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+                }}
+            >
+                <UpdateCategory onAddMoney={handleAddMoney} />
+            </Popover>
           </CardActions>
         </React.Fragment>
       );
