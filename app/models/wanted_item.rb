@@ -1,0 +1,2 @@
+class WantedItem < ApplicationRecord
+end

@@ -1,0 +1,2 @@
+class WantedItemsController < ApplicationController
+end
