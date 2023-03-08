@@ -9,6 +9,7 @@ import Home from '../pages/Home';
 import Account from '../pages/Account';
 import Loading from '../pages/Loading';
 import AddBudgetCategory from '../pages/AddBudgetCategory';
+import AddWantedItem from '../pages/AddWantedItem';
 import '../App.css';
 
 function App() {
@@ -57,6 +58,9 @@ function App() {
           </Route>
           <Route path="/add_category">
             <AddBudgetCategory />
+          </Route>
+          <Route path="/add_item">
+            <AddWantedItem />
           </Route>
           <Route path="/">
             <Home />
