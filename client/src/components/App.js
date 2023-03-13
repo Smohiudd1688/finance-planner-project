@@ -35,6 +35,7 @@ function App() {
 
   }, []);
 
+  console.log(wantedItems);
   if ((!user || user.email === undefined) && isLogged) {
     return <Loading />
   } else if ((!user || user.email === undefined) && !isLogged) {
