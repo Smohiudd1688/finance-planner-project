@@ -1,6 +1,6 @@
 class WantedItem < ApplicationRecord
     belongs_to :user
-    has_many :wanted_item_tags
+    has_many :wanted_item_tags, dependent: :destroy
     has_many :tags, through: :wanted_item_tags
 
     validates :title, :price, :title, :importance, :amount_saved, :reason, presence: true

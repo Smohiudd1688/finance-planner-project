@@ -8,33 +8,19 @@ import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
 import PopoverForm from "../components/PopoverForm";
 
-function AddWantedItem ({wantedItems, setWantedItems}) {
+function AddWantedItem ({wantedItems, setWantedItems, tags, setTags}) {
     const [errors, setErrors] = useState([]);
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
     const [importance, setImportance] = useState(0);
     const [reason, setReason] = useState("");
-    const [tags, setTags] = useState([]);
     const [selectedTags, setSelectedTags] = useState([]);
-
-    useEffect(() => {
-        setErrors([]);
-
-        fetch(`/tags`).then((res) => {
-            if (res.ok) {
-               res.json().then((data) => {
-                  setTags(data);
-                });
-               } else {
-                alert("Error retrieving tags");
-               }
-            });
-    }, []);
 
     const history = useHistory();
 
     function handleAddItem(event) {
         event.preventDefault();
+        setErrors([]);
 
         const wantedItem = {
             title: title,

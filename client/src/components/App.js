@@ -17,6 +17,7 @@ function App() {
   const [user, setUser] = useState({});
   const [categories, setCategories] = useState([]);
   const [wantedItems, setWantedItems] = useState([]);
+  const [tags, setTags] = useState([]);
   const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
@@ -33,9 +34,18 @@ function App() {
          }
       });
 
+      fetch(`/tags`).then((res) => {
+        if (res.ok) {
+           res.json().then((data) => {
+              setTags(data);
+            });
+           } else {
+            alert("Error retrieving tags");
+           }
+      });
+
   }, []);
 
-  console.log(wantedItems);
   if ((!user || user.email === undefined) && isLogged) {
     return <Loading />
   } else if ((!user || user.email === undefined) && !isLogged) {
@@ -63,13 +73,13 @@ function App() {
             <Account setIsLogged={setIsLogged} />
           </Route>
           <Route path="/wanted">
-            <Wanted wantedItems={wantedItems} setWantedItems={setWantedItems} />
+            <Wanted tags={tags} wantedItems={wantedItems} setWantedItems={setWantedItems} />
           </Route>
           <Route path="/add_category">
             <AddBudgetCategory categories={categories} setCategories={setCategories} />
           </Route>
           <Route path="/add_item">
-            <AddWantedItem wantedItems={wantedItems} setWantedItems={setWantedItems} />
+            <AddWantedItem tags={tags} setTags={setTags} wantedItems={wantedItems} setWantedItems={setWantedItems} />
           </Route>
           <Route path="/">
             <Home categories={categories} setCategories={setCategories} />

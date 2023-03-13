@@ -57,6 +57,11 @@
   font-weight: 500;
 }
 
+#head{
+  margin-left: 0%;
+  margin-top: 6%;
+}
+
 h1 {
   margin-left: 11%;
   margin-top: 6%;
@@ -82,6 +87,11 @@ h1 {
   margin-bottom: 5%;
 }
 
+#progressWant {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
 #addMoney {
   margin-left: 35%;
 }
@@ -93,4 +103,22 @@ h1 {
 #tagPopover {
   width: 20%;
   margin-left: 40%;
+}
+
+#want {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+#wantButton {
+  margin-right: 1%;
+  margin-left: 1%;
+  height: 1%;
+  width: 12%;
+  font-size: 8px;
+  margin-bottom: 2%;
+}
+
+#autoWant {
+  width: 30px;
 }

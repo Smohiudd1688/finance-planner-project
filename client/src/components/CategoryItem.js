@@ -1,33 +1,15 @@
 import React, {useState} from "react";
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import LinearProgress from '@mui/material/LinearProgress';
-import Popover from '@mui/material/Popover';
-
 import PopoverForm from "./PopoverForm";
 
 function CategoryItem({id, title, budget, current, onUpdateCategory}) {
-    const [anchorEl, setAnchorEl] = useState(null);
     const [error, setError] = useState("");
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const open = Boolean(anchorEl);
-    const check = open ? 'simple-popover' : undefined;
-
     function handleAddMoney(newCurrent) {
-        setAnchorEl(null);
-
         if (parseInt(newCurrent) === NaN || parseInt(newCurrent).toString().length !== newCurrent.length || parseInt(newCurrent) <= 0) {
             setError("Please enter a valid number greater than zero.") 
         } else {
@@ -61,6 +43,7 @@ function CategoryItem({id, title, budget, current, onUpdateCategory}) {
             <Typography sx={{ fontSize: 24 }} color="text.secondary" gutterBottom>
               {title}
             </Typography>
+            
             <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
               Amount Spent:
             </Typography>
