@@ -1,23 +1,39 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useHistory } from "react-router-dom";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
+import Autocomplete from '@mui/material/Autocomplete';
+import PopoverForm from "../components/PopoverForm";
 
 function AddWantedItem () {
     const [errors, setErrors] = useState([]);
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
-    const [importance, setImportance] = useState("");
+    const [importance, setImportance] = useState(0);
     const [reason, setReason] = useState("");
+    const [tags, setTags] = useState([]);
+    const [selectedTags, setSelectedTags] = useState([]);
 
-    const tags = ['Entertainment', 'Rent', 'Reading'];
+    useEffect(() => {
+        setErrors([]);
+
+        fetch(`/tags`).then((res) => {
+            if (res.ok) {
+               res.json().then((data) => {
+                  setTags(data)
+                });
+               } else {
+                alert("Error retrieving tags");
+               }
+            });
+    }, []);
 
     const history = useHistory();
 
-    function handleAddCategory(event) {
+    function handleAddItem(event) {
         event.preventDefault();
 
         const wantedItem = {
@@ -44,6 +60,10 @@ function AddWantedItem () {
         });
     }
 
+    function handleAddTag() {
+
+    }
+
     const renderErrors = errors.map((error, index) => {
         return (
             <p className="errors" key={index}>* {error}</p>
@@ -60,7 +80,7 @@ function AddWantedItem () {
             noValidate
             autoComplete="off"
         >
-            <h2 className="header">Add an Item to Save For</h2>
+            <h2 className="header">ADD AN ITEM TO SAVE FOR</h2>
             {errors.length !== 0 ? renderErrors : null}
             <TextField
                 required
@@ -83,16 +103,32 @@ function AddWantedItem () {
                 variant="standard"
                 onChange={event => setReason(event.target.value)}
             /><br></br><br></br>
+            <Autocomplete
+                    multiple
+                    id="tags-standard"
+                    options={tags}
+                    getOptionLabel={(option) => option.title}
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            variant="standard"
+                            label="Tags"
+                            placeholder="Select Tags"
+                        />
+                    )}
+                    onChange={(event, value) => setSelectedTags(value)}
+            />
+            <PopoverForm label="+ Add New Tag" /><br></br>
             <Typography component="legend">Importance of Item</Typography>
             <Rating
                 name="simple-controlled"
                 id="rating"
                 value={importance}
-                onChange={(event, newValue) => {
-                    setImportance(newValue);
+                onChange={(event, value) => {
+                    setImportance(value);
                 }}
             /><br></br><br></br>
-            <Button onClick={handleAddCategory} variant="outlined" color="error">
+            <Button onClick={handleAddItem} variant="contained" color="error">
                 Add Item
             </Button><br></br><br></br>
         </Box>

@@ -7,7 +7,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import LinearProgress from '@mui/material/LinearProgress';
 import Popover from '@mui/material/Popover';
-import UpdateCategory from "../UpdateCategory";
+
+import PopoverForm from "./PopoverForm";
 
 function CategoryItem({id, title, budget, current, onUpdateCategory}) {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -68,21 +69,7 @@ function CategoryItem({id, title, budget, current, onUpdateCategory}) {
               ${current} out of ${budget}
             </Typography>
           </CardContent>
-          <CardActions>
-            <Button onClick={handleClick} color="error" size="small">Add Money</Button>
-            <Popover
-                id={check}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-                }}
-            >
-                <UpdateCategory onAddMoney={handleAddMoney} />
-            </Popover>
-          </CardActions>
+          <PopoverForm onAddMoney={handleAddMoney} label="Add Money"/>
         </React.Fragment>
       );
 

@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Login from '../pages/Login';
 import NavBar from './NavBar';
 import Home from '../pages/Home';
+import Wanted from '../pages/Wanted';
 import Account from '../pages/Account';
 import Loading from '../pages/Loading';
 import AddBudgetCategory from '../pages/AddBudgetCategory';
@@ -14,6 +15,8 @@ import '../App.css';
 
 function App() {
   const [user, setUser] = useState({});
+  const [categories, setCategories] = useState([]);
+  const [wantedItems, setWantedItems] = useState([]);
   const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
@@ -21,7 +24,9 @@ function App() {
     fetch("/me").then((res) => {
       if (res.ok) {
          res.json().then((user) => {
-            setUser(user)
+            setUser(user);
+            setCategories(user.budget_categories);
+            setWantedItems(user.wanted_items);
           });
          } else {
           setIsLogged(false);
@@ -56,14 +61,17 @@ function App() {
           <Route path="/account">
             <Account setIsLogged={setIsLogged} />
           </Route>
+          <Route path="/wanted">
+            <Wanted wantedItems={wantedItems} setWantedItems={setWantedItems} />
+          </Route>
           <Route path="/add_category">
-            <AddBudgetCategory />
+            <AddBudgetCategory categories={categories} setCategories={setCategories} />
           </Route>
           <Route path="/add_item">
             <AddWantedItem />
           </Route>
           <Route path="/">
-            <Home />
+            <Home categories={categories} setCategories={setCategories} />
           </Route>
           <Route path="*">
             <h1>404 not found</h1>

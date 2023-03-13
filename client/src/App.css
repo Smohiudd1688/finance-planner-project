@@ -67,6 +67,11 @@ h1 {
   margin-left: 43%;
 }
 
+#addButtonItem {
+  margin-top: 8%;
+  margin-left: 43%;
+}
+
 .cat {
   margin-left: 15%;
   margin-right: 15%;
@@ -85,6 +90,7 @@ h1 {
   cursor: pointer;
 }
 
-#rating {
-
+#tagPopover {
+  width: 20%;
+  margin-left: 40%;
 }

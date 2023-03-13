@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :create, :update]
   resources :budget_categories, only: [:create, :index, :update]
   resources :wanted_items, only: [:create, :index, :update, :destroy]
+  resources :tags, only: [:create, :index]
+  resources :wanted_item_tags, only: [:create]
 
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"

@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-function AddBudgetCategory () {
+function AddBudgetCategory ({categories, setCategories}) {
     const [errors, setErrors] = useState([]);
     const [title, setTitle] = useState("");
     const [budget, setBudget] = useState("");
@@ -20,8 +20,6 @@ function AddBudgetCategory () {
             current_spent: 0
         }
 
-        console.log(budgetCategory)
-
         fetch('/budget_categories', {
             method: "POST",
             headers: {"Content-Type" : "application/json"},
@@ -31,6 +29,7 @@ function AddBudgetCategory () {
             if (res.ok) {
                 res.json().then(data => {
                     history.push('/');
+                    setCategories([...categories, data]);
                 })
             } else {
                 res.json().then(e => setErrors(e.errors))
@@ -54,7 +53,7 @@ function AddBudgetCategory () {
             noValidate
             autoComplete="off"
         >
-            <h2 className="header">Add a Category</h2>
+            <h2 className="header">ADD A CATEGORY</h2>
             {errors.length !== 0 ? renderErrors : null}
             <TextField
                 required

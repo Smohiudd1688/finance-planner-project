@@ -6,17 +6,10 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import CategoryItem from "../components/CategoryItem";
 
-function Home() {
+function Home({categories, setCategories}) {
     const {user} = useContext(UserContext);
-    const [categories, setCategories] = useState([]);
 
     const history = useHistory();
-
-    useEffect(() => {
-        fetch('/budget_categories')
-        .then(res => res.json())
-        .then(data => setCategories(data));
-    }, []);
 
     function handleAddCatButton() {
         history.push('/add_category');

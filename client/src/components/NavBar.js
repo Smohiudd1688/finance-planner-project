@@ -45,6 +45,8 @@ function NavBar() {
   function handleNavigate(page) {
     if (page === 'Home') {
       history.push('/');
+    } else if (page === 'Wanted Items Tracker') {
+      history.push('/wanted')
     }
   }
 
