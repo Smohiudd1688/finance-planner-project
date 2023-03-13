@@ -3,12 +3,13 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-function UpdateCategory ({onAddMoney}) {
+function UpdateCategory ({onAddMoney, setAnchorEl}) {
     const [current, setCurrent] = useState("");
 
     function handleAddMoney(event) {
         event.preventDefault();
 
+        setAnchorEl(null);
         onAddMoney(current);
     }
 

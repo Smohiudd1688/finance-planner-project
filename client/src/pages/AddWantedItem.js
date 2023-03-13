@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Autocomplete from '@mui/material/Autocomplete';
 import PopoverForm from "../components/PopoverForm";
 
-function AddWantedItem () {
+function AddWantedItem ({wantedItems, setWantedItems}) {
     const [errors, setErrors] = useState([]);
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
@@ -23,7 +23,7 @@ function AddWantedItem () {
         fetch(`/tags`).then((res) => {
             if (res.ok) {
                res.json().then((data) => {
-                  setTags(data)
+                  setTags(data);
                 });
                } else {
                 alert("Error retrieving tags");
@@ -38,10 +38,11 @@ function AddWantedItem () {
 
         const wantedItem = {
             title: title,
-            price: price,
+            price: parseInt(price),
             importance: importance,
             reason: reason,
-            amount_saved: 0
+            amount_saved: 0,
+            new_tags: selectedTags
         }
 
         fetch('/wanted_items', {
@@ -52,16 +53,18 @@ function AddWantedItem () {
         .then(res => {
             if (res.ok) {
                 res.json().then(data => {
-                    history.push('/');
+                    setWantedItems([...wantedItems, data]);
+                    history.push('/wanted');
                 })
             } else {
-                res.json().then(e => setErrors(e.errors))
+                res.json().then(e => console.log(e.errors))
             }
         });
     }
 
-    function handleAddTag() {
-
+    function handleAddTag(newTag) {
+        setTags([...tags, newTag]);
+        setSelectedTags([...selectedTags, newTag]);
     }
 
     const renderErrors = errors.map((error, index) => {
@@ -118,7 +121,7 @@ function AddWantedItem () {
                     )}
                     onChange={(event, value) => setSelectedTags(value)}
             />
-            <PopoverForm label="+ Add New Tag" /><br></br>
+            <PopoverForm onAddTag={handleAddTag} label="+ Add New Tag" /><br></br>
             <Typography component="legend">Importance of Item</Typography>
             <Rating
                 name="simple-controlled"

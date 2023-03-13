@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 
-function Wanted({wantedItem, setWantedItem}) {
+function Wanted({wantedItems, setWantedItems}) {
     const {user} = useContext(UserContext);
 
     const history = useHistory();

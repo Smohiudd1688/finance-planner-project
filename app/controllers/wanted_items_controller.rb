@@ -5,12 +5,15 @@ class WantedItemsController < ApplicationController
         def create
             user = User.find(session[:user_id])
             wanted_item = user.wanted_items.create!(wanted_item_params)
+            wanted_item.createTags(params[:new_tags])
             render json: wanted_item, status: :created
         end
     
         def index
-            user = User.find(session[:user_id])
-            render json: user.wanted_items, status: :ok
+            #user = User.find(session[:user_id])
+            #render json: user.wanted_items, status: :ok
+            
+            render json: WantedItem.all, status: :ok
         end
     
         def update
@@ -28,7 +31,7 @@ class WantedItemsController < ApplicationController
         private
     
         def wanted_item_params
-            params.permit(:title, :budget, :current_spent)
+            params.permit(:title, :price, :importance, :amount_saved, :reason)
         end
     
         def render_unprocessable_entity_response(invalid)

@@ -9,8 +9,14 @@ class WantedItem < ApplicationRecord
     validate :amount_saved_cannot_be_greater_than_price
 
     def amount_saved_cannot_be_greater_than_price
-        if amount_saved > price
-          errors.add(:amount_saved, "can't be greater than total value")
-        end
+      if :amount_saved > :price
+        errors.add(:amount_saved, "can't be greater than total value")
+      end
+    end
+
+    def createTags(tags)
+      tags.each do |tag|
+        self.wanted_item_tags.create(tag_id: tag[:id])
+      end
     end
 end

@@ -68,7 +68,7 @@ function App() {
             <AddBudgetCategory categories={categories} setCategories={setCategories} />
           </Route>
           <Route path="/add_item">
-            <AddWantedItem />
+            <AddWantedItem wantedItems={wantedItems} setWantedItems={setWantedItems} />
           </Route>
           <Route path="/">
             <Home categories={categories} setCategories={setCategories} />

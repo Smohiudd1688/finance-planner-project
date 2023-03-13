@@ -3,8 +3,9 @@ import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import UpdateCategory from "./UpdateCategory";
+import AddTagForm from "./AddTagForm";
 
-function PopoverForm({label, onAddMoney}) {
+function PopoverForm({label, onAddMoney, onAddTag}) {
     const [anchorEl, setAnchorEl] = useState(null);
 
     const handleClick = (event) => {
@@ -31,7 +32,9 @@ function PopoverForm({label, onAddMoney}) {
                 horizontal: 'left',
                 }}
             >
-                {label === "Add Money" ? <UpdateCategory onAddMoney={onAddMoney} /> : null}
+                {label === "Add Money" ? 
+                <UpdateCategory setAnchorEl={setAnchorEl} onAddMoney={onAddMoney} /> :
+                 <AddTagForm setAnchorEl={setAnchorEl} onAddTag={onAddTag} />}
             </Popover>
           </CardActions>
     );

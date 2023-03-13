@@ -1,7 +1,7 @@
 class WantedItemTagsController < ApplicationController
     def create
-        tag = Tag.create!(tag_params)
-        render json: tag, status: :created
+        wanted_item_tag = WantedItemTag.create!(wanted_item_tag_params)
+        render json: wanted_item_tag, status: :ok
     end
 
     private
