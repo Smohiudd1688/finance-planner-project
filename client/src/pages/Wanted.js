@@ -26,7 +26,14 @@ function Wanted({wantedItems, setWantedItems, tags}) {
             return wantedItem;
         });
 
+        const updatedFilteredItems = filteredItems.map((wantedItem) => {
+            if (updatedWanted.id === wantedItem.id) return updatedWanted;
+            return wantedItem;
+        });
+        console.log(updatedFilteredItems)
+
         setWantedItems(updatedWantedItems);
+        setFilteredItems(updatedFilteredItems);
     }
 
     function handleDeleteItem(deletedId) {
@@ -47,13 +54,9 @@ function Wanted({wantedItems, setWantedItems, tags}) {
                 setFilteredItems(data)
             })
         }
-
     }
 
-    console.log(filteredItems);
-
     function renderWantedItems(items) {
-        console.log(items)
         return items.map(item => {
             return (
                 <WantedItemCard
