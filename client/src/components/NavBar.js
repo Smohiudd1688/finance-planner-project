@@ -15,7 +15,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { red, grey } from '@mui/material/colors';
 
-const pages = ['Home', 'Wanted Items Tracker', 'Charts'];
+const pages = ['Home', 'Wanted Items Tracker', 'Budget Breakdown'];
 
 function NavBar() {
   const {user} = useContext(UserContext);
@@ -47,6 +47,8 @@ function NavBar() {
       history.push('/');
     } else if (page === 'Wanted Items Tracker') {
       history.push('/wanted')
+    } else if (page === 'Budget Breakdown') {
+      history.push('/chart')
     }
   }
 

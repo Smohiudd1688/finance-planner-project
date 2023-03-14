@@ -9,6 +9,12 @@ class TagsController < ApplicationController
         render json: tags, status: :ok
     end
 
+    def show
+        tag = Tag.find(params[:id])
+        wanted_items = tag.wanted_items
+        render json: wanted_items, status: :ok
+    end
+
     private
 
     def tag_params

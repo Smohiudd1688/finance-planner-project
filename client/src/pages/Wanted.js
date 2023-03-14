@@ -11,9 +11,8 @@ import TextField from '@mui/material/TextField';
 
 function Wanted({wantedItems, setWantedItems, tags}) {
     const {user} = useContext(UserContext);
-    const [filter, setFilter] = useState("");
-
-    console.log(filter);
+    const [filter, setFilter] = useState(null);
+    const [filteredItems, setFilteredItems] = useState([]);
 
     const history = useHistory();
 
@@ -38,22 +37,40 @@ function Wanted({wantedItems, setWantedItems, tags}) {
         setWantedItems(updatedWantedItems);
     }
 
-    const renderWantedItems = wantedItems.map(item => {
-        return (
-            <WantedItemCard
-                key={item.id}
-                id={item.id}
-                title={item.title}
-                price={item.price}
-                amountSaved={item.amount_saved}
-                reason={item.reason}
-                importance={item.importance}
-                tags={item.tags}
-                onUpdateWanted={handleUpdateWanted}
-                onDeleteItem={handleDeleteItem}
-            />
-        )
-    });
+    function handleFilter(value) {
+        setFilter(value);
+        
+        if (value !== null) {
+            fetch(`tags/${value.id}`)
+            .then(res => res.json())
+            .then(data => {
+                setFilteredItems(data)
+            })
+        }
+
+    }
+
+    console.log(filteredItems);
+
+    function renderWantedItems(items) {
+        console.log(items)
+        return items.map(item => {
+            return (
+                <WantedItemCard
+                    key={item.id}
+                    id={item.id}
+                    title={item.title}
+                    price={item.price}
+                    amountSaved={item.amount_saved}
+                    reason={item.reason}
+                    importance={item.importance}
+                    tags={item.tags}
+                    onUpdateWanted={handleUpdateWanted}
+                    onDeleteItem={handleDeleteItem}
+                />
+            )
+        })
+    }
 
     return (
        <Box sx={{ flexGrow: 1 }}>
@@ -66,16 +83,21 @@ function Wanted({wantedItems, setWantedItems, tags}) {
                         Add an Item to Buy
                     </Button>
                 </Grid>
-            </Grid><br></br>
-            <Stack spacing={4}>
-            <Autocomplete
+                <Grid item xs={3}></Grid>
+                <Grid item xs={6}>
+                    <Autocomplete
                         disablePortal
                         id="autoWant"
                         options={tags}
                         getOptionLabel={(option) => option.title}
                         renderInput={(params) => <TextField {...params} label="Filter by Tag" />}
+                        onChange={(event, value) => handleFilter(value)}
                     />
-                {renderWantedItems}
+                </Grid>
+                <Grid item xs={3}></Grid>
+            </Grid><br></br>
+            <Stack spacing={4}>
+                {filter !== null ? renderWantedItems(filteredItems) : renderWantedItems(wantedItems)}
             </Stack><br></br><br></br><br></br>
         </Box>
     );

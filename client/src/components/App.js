@@ -9,6 +9,7 @@ import Home from '../pages/Home';
 import Wanted from '../pages/Wanted';
 import Account from '../pages/Account';
 import Loading from '../pages/Loading';
+import Charts from '../pages/Charts';
 import AddBudgetCategory from '../pages/AddBudgetCategory';
 import AddWantedItem from '../pages/AddWantedItem';
 import '../App.css';
@@ -74,6 +75,9 @@ function App() {
           </Route>
           <Route path="/wanted">
             <Wanted tags={tags} wantedItems={wantedItems} setWantedItems={setWantedItems} />
+          </Route>
+          <Route path="/chart">
+            <Charts categories={categories} />
           </Route>
           <Route path="/add_category">
             <AddBudgetCategory categories={categories} setCategories={setCategories} />

@@ -119,6 +119,12 @@ h1 {
   margin-bottom: 2%;
 }
 
-#autoWant {
-  width: 30px;
+#pie {
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+h2 {
+  font-size: 200%;
 }
