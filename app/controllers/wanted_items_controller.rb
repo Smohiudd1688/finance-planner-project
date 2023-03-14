@@ -10,10 +10,8 @@ class WantedItemsController < ApplicationController
         end
     
         def index
-            #user = User.find(session[:user_id])
-            #render json: user.wanted_items, status: :ok
-            
-            render json: WantedItem.all, status: :ok
+            user = User.find(session[:user_id])
+            render json: user.wanted_items, status: :ok
         end
     
         def update

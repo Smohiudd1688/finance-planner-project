@@ -1,5 +1,4 @@
-import React, {useContext, useState, useEffect} from "react";
-import { UserContext } from "../components/UserContext";
+import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -10,7 +9,6 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
 function Wanted({wantedItems, setWantedItems, tags}) {
-    const {user} = useContext(UserContext);
     const [filter, setFilter] = useState(null);
     const [filteredItems, setFilteredItems] = useState([]);
 

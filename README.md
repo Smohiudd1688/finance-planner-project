@@ -37,7 +37,7 @@ different categories for their budget and track the money they spend.
 4. You are now ready to use the application!
 
 ## Usage
-To use this application you can go to the [website](https://fitness-tracker-app.onrender.com/). A user can sign up by creating an account, once the account is created the can create the categories they want for their budget and add the money they set aside as the month progresses. A user may also travel to the wanted items tracker page and track any items they want to purchase in the future, and also travel to the budget breakdown page and get a visual breakdown of how their budget is allocated.
+To use this application you can go to the [website](https://finance-planner-app.onrender.com). A user can sign up by creating an account, once the account is created the can create the categories they want for their budget and add the money they set aside as the month progresses. A user may also travel to the wanted items tracker page and track any items they want to purchase in the future, and also travel to the budget breakdown page and get a visual breakdown of how their budget is allocated.
 
 ## Project Status
 This application is completed for now.

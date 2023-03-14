@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, {useContext} from "react";
 import { UserContext } from "../components/UserContext";
 import { useHistory } from "react-router-dom";
 import Box from '@mui/material/Box';
@@ -7,8 +7,6 @@ import Button from '@mui/material/Button';
 import CategoryItem from "../components/CategoryItem";
 
 function Home({categories, setCategories}) {
-    const {user} = useContext(UserContext);
-
     const history = useHistory();
 
     function handleAddCatButton() {
