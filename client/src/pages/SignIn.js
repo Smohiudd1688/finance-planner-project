@@ -33,7 +33,7 @@ const darkTheme = createTheme({
   },
 });
 
-function SignIn({setIsLogged, setOn}) {
+function SignIn({setIsLogged, setOn, setCategories, setWantedItems}) {
   const {setUser} = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -60,6 +60,8 @@ function SignIn({setIsLogged, setOn}) {
         res.json().then(user => {
           setIsLogged(true);
           setUser(user);
+          setCategories(user.budget_categories);
+          setWantedItems(user.wanted_items);
           history.push('/');
         })
       } else {

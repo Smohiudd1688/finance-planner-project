@@ -43,7 +43,7 @@ function AddWantedItem ({wantedItems, setWantedItems, tags, setTags}) {
                     history.push('/wanted');
                 })
             } else {
-                res.json().then(e => console.log(e.errors))
+                res.json().then(e => setErrors(e.errors))
             }
         });
     }

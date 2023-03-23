@@ -33,7 +33,7 @@ const darkTheme = createTheme({
     },
 });
 
-function SignUp({setIsLogged, setOn}) {
+function SignUp({setIsLogged, setOn, setCategories, setWantedItems}) {
     const {setUser} = useContext(UserContext);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -65,6 +65,8 @@ function SignUp({setIsLogged, setOn}) {
                 res.json().then(user => {
                     setIsLogged(true);
                     setUser(user);
+                    setCategories(user.budget_categories);
+                    setWantedItems(user.wanted_items);
                     history.push('/');
                 })
             } else {

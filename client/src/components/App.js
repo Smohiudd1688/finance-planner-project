@@ -52,7 +52,7 @@ function App() {
   } else if ((!user || user.email === undefined) && !isLogged) {
     return (
       <UserContext.Provider value={{user, setUser}}>
-        <Login setIsLogged={setIsLogged} />
+        <Login setIsLogged={setIsLogged} setCategories={setCategories} setWantedItems={setWantedItems} />
       </UserContext.Provider>
     )
   }
@@ -88,7 +88,7 @@ function App() {
           <Route path="/">
             <Home categories={categories} setCategories={setCategories} />
           </Route>
-          <Route path="*">
+          <Route path="">
             <h1>404 not found</h1>
           </Route>
         </Switch>
