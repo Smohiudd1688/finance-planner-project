@@ -18,7 +18,6 @@ function App() {
   const [user, setUser] = useState({});
   const [categories, setCategories] = useState([]);
   const [wantedItems, setWantedItems] = useState([]);
-  const [tags, setTags] = useState([]);
   const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
@@ -34,15 +33,6 @@ function App() {
           setIsLogged(false);
          }
       });
-
-      fetch(`/tags`).then((res) => {
-        if (res.ok) {
-           res.json().then((data) => {
-              setTags(data);
-            });
-           }
-      });
-
   }, []);
 
   if ((!user || user.email === undefined) && isLogged) {
@@ -72,16 +62,13 @@ function App() {
             <Account setIsLogged={setIsLogged} />
           </Route>
           <Route path="/wanted">
-            <Wanted tags={tags} wantedItems={wantedItems} setWantedItems={setWantedItems} />
+            <Wanted wantedItems={wantedItems} setWantedItems={setWantedItems} />
           </Route>
           <Route path="/chart">
             <Charts categories={categories} />
           </Route>
           <Route path="/add_category">
             <AddBudgetCategory categories={categories} setCategories={setCategories} />
-          </Route>
-          <Route path="/add_item">
-            <AddWantedItem tags={tags} setTags={setTags} wantedItems={wantedItems} setWantedItems={setWantedItems} />
           </Route>
           <Route path="/">
             <Home categories={categories} setCategories={setCategories} />

@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useHistory } from "react-router-dom";
+import AddWantedItem from "./AddWantedItem";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -8,14 +9,28 @@ import WantedItemCard from "../components/WantedItemCard";
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 
-function Wanted({wantedItems, setWantedItems, tags}) {
+function Wanted({wantedItems, setWantedItems}) {
+    const [tags, setTags] = useState([]);
     const [filter, setFilter] = useState(null);
     const [filteredItems, setFilteredItems] = useState([]);
 
     const history = useHistory();
 
+    useEffect(() => {
+          fetch(`/tags`).then((res) => {
+            if (res.ok) {
+               res.json().then((data) => {
+                  setTags(data);
+                });
+               }
+          });
+    
+      }, []);
+
     function handleAddItemButton() {
-        history.push('/add_item');
+        return (
+            <AddWantedItem tags={tags} setTags={setTags} wantedItems={wantedItems} setWantedItems={setWantedItems} />
+        );
     }
 
     function handleUpdateWanted(updatedWanted) {
