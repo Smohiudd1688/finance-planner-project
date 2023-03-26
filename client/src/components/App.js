@@ -40,8 +40,6 @@ function App() {
            res.json().then((data) => {
               setTags(data);
             });
-           } else {
-            alert("Error retrieving tags");
            }
       });
 
